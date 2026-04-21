@@ -19,7 +19,7 @@ Treat it as a stylistic flag, not as a truth oracle.
 - **Frontend:** Next.js 16 (App Router, Turbopack) + React 19 + Tailwind CSS 4
 - **UI:** Inline SVG icons (lucide-react), custom dark-navy design system
 - **Inference:** Hugging Face Serverless Inference API
-- **Model:** [`hamzab/roberta-fake-news-classification`](https://huggingface.co/hamzab/roberta-fake-news-classification) — RoBERTa fine-tuned for fake news detection
+- **Model:** [`jy46604790/Fake-News-Bert-Detect`](https://huggingface.co/jy46604790/Fake-News-Bert-Detect) — BERT fine-tuned on the ISOT fake news dataset. Labels: `LABEL_0` (FAKE) / `LABEL_1` (REAL).
 - **Deployment:** Vercel
 
 ## How it works

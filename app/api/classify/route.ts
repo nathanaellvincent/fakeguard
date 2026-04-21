@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 
-const DEFAULT_MODEL = "hamzab/roberta-fake-news-classification";
+const DEFAULT_MODEL = "jy46604790/Fake-News-Bert-Detect";
 
 type HfClassifierResult = { label: string; score: number };
 
