@@ -2,7 +2,7 @@
 
 A live web demo that classifies news text as **likely misleading** or **likely reliable** using a fine-tuned transformer model. Paste a headline or a short article, submit, and see the model's verdict with a confidence score.
 
-**Live:** [fakeguard.vercel.app](https://fakeguard.vercel.app) *(deploy pending)*
+**Live:** [fakeguard-inky.vercel.app](https://fakeguard-inky.vercel.app)
 
 ## What this is (and what it isn't)
 
