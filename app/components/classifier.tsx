@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Loader2, ShieldCheck, ShieldAlert, Sparkles } from "lucide-react";
+import { Loader2, ShieldCheck, ShieldAlert, ArrowRight } from "lucide-react";
 import { clsx } from "clsx";
 
 type Verdict = "FAKE" | "REAL";
@@ -46,10 +46,10 @@ export function Classifier() {
 
   return (
     <div className="w-full max-w-3xl">
-      <form onSubmit={onSubmit} className="glass rounded-2xl p-5 sm:p-6">
+      <form onSubmit={onSubmit} className="glass rounded-lg p-5 sm:p-6">
         <label
           htmlFor="news-input"
-          className="font-mono text-xs tracking-wider text-accent-soft uppercase"
+          className="font-mono text-xs tracking-[0.2em] text-accent uppercase"
         >
           Paste a headline or article
         </label>
@@ -60,7 +60,7 @@ export function Classifier() {
           placeholder="e.g. Scientists say drinking coffee cures all known diseases, study claims…"
           rows={6}
           maxLength={2000}
-          className="mt-3 w-full resize-none rounded-xl border border-border bg-bg-soft/60 px-4 py-3 text-sm leading-relaxed text-ink placeholder:text-ink-dim focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/20"
+          className="mt-3 w-full resize-none rounded-md border border-border bg-bg-soft/60 px-4 py-3 text-sm leading-relaxed text-ink placeholder:text-ink-dim focus:border-accent/60 focus:outline-none focus:ring-2 focus:ring-accent/20"
         />
 
         <div className="mt-3 flex flex-wrap items-center justify-between gap-3">
@@ -71,9 +71,9 @@ export function Classifier() {
             type="submit"
             disabled={!canSubmit}
             className={clsx(
-              "inline-flex items-center gap-2 rounded-lg px-4 py-2 font-mono text-xs tracking-wider uppercase transition-all",
+              "inline-flex items-center gap-2 rounded-md px-4 py-2 font-mono text-xs tracking-[0.15em] uppercase transition-all",
               canSubmit
-                ? "bg-accent text-white hover:bg-accent-glow"
+                ? "bg-accent text-[#0b0a08] hover:bg-accent-glow"
                 : "cursor-not-allowed bg-surface text-ink-dim",
             )}
           >
@@ -84,15 +84,15 @@ export function Classifier() {
               </>
             ) : (
               <>
-                <Sparkles size={14} />
                 Classify
+                <ArrowRight size={14} />
               </>
             )}
           </button>
         </div>
 
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          <span className="font-mono text-[10px] tracking-wider text-ink-dim uppercase">
+        <div className="mt-4 flex flex-wrap items-center gap-1.5">
+          <span className="font-mono text-[10px] tracking-[0.2em] text-ink-dim uppercase">
             Try:
           </span>
           {EXAMPLES.map((ex, i) => (
@@ -100,7 +100,7 @@ export function Classifier() {
               key={i}
               type="button"
               onClick={() => setText(ex)}
-              className="rounded-md border border-border bg-bg-soft/40 px-2 py-0.5 text-left font-mono text-[11px] text-ink-muted transition-colors hover:border-accent/40 hover:text-accent-soft"
+              className="rounded-md border border-border bg-bg-soft/40 px-2 py-0.5 text-left font-mono text-[11px] text-ink-muted transition-colors hover:border-accent/50 hover:text-accent"
             >
               Example {i + 1}
             </button>
@@ -116,8 +116,8 @@ export function Classifier() {
 function ResultPanel({ result }: { result: ClassifyResponse }) {
   if (!result.ok) {
     return (
-      <div className="fade-up mt-5 rounded-2xl border border-amber-500/30 bg-amber-500/5 p-5">
-        <p className="font-mono text-xs tracking-wider text-amber-300 uppercase">
+      <div className="fade-up mt-5 rounded-lg border border-accent/40 bg-accent/5 p-5">
+        <p className="font-mono text-xs tracking-[0.2em] text-accent uppercase">
           {result.warming ? "Model warming up" : "Error"}
         </p>
         <p className="mt-1 text-sm text-ink-muted">{result.error}</p>
@@ -136,12 +136,13 @@ function ResultPanel({ result }: { result: ClassifyResponse }) {
   const confidencePct = Math.round(score * 100);
 
   return (
-    <div className="fade-up mt-5 rounded-2xl border border-border bg-surface/40 p-5 backdrop-blur sm:p-6">
+    <article className="fade-up mt-5 rounded-lg border border-border bg-surface/50 p-5 backdrop-blur sm:p-6">
+      {/* Callout-style header — newsroom result card */}
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div className="flex items-start gap-3">
           <div
             className={clsx(
-              "flex h-10 w-10 items-center justify-center rounded-lg",
+              "flex h-10 w-10 items-center justify-center rounded-md",
               isFake
                 ? "bg-danger/15 text-[color:var(--color-danger)]"
                 : "bg-safe/15 text-[color:var(--color-safe)]",
@@ -150,30 +151,36 @@ function ResultPanel({ result }: { result: ClassifyResponse }) {
             {isFake ? <ShieldAlert size={20} /> : <ShieldCheck size={20} />}
           </div>
           <div>
-            <p className="font-mono text-[11px] tracking-wider text-ink-dim uppercase">
+            <p className="font-mono text-[11px] tracking-[0.2em] text-ink-dim uppercase">
               Verdict
             </p>
             <p
               className={clsx(
-                "text-xl font-semibold",
+                "text-2xl leading-tight",
                 isFake
                   ? "text-[color:var(--color-danger)]"
                   : "text-[color:var(--color-safe)]",
               )}
+              style={{ fontFamily: "var(--font-serif), serif", fontStyle: "italic" }}
             >
               Likely {isFake ? "misleading" : "reliable"}
             </p>
           </div>
         </div>
         <div className="text-right">
-          <p className="font-mono text-[11px] tracking-wider text-ink-dim uppercase">
+          <p className="font-mono text-[11px] tracking-[0.2em] text-ink-dim uppercase">
             Confidence
           </p>
-          <p className="text-xl font-semibold text-ink">{confidencePct}%</p>
+          <p
+            className="text-2xl leading-tight text-ink"
+            style={{ fontFamily: "var(--font-serif), serif" }}
+          >
+            {confidencePct}%
+          </p>
         </div>
       </div>
 
-      <div className="mt-4 h-2 overflow-hidden rounded-full bg-bg-soft/60">
+      <div className="mt-4 h-1.5 overflow-hidden rounded-full bg-bg-soft/80">
         <div
           className={clsx(
             "bar-fill h-full rounded-full",
@@ -183,22 +190,24 @@ function ResultPanel({ result }: { result: ClassifyResponse }) {
         />
       </div>
 
-      <p className="mt-4 text-xs leading-relaxed text-ink-dim">
-        This is pattern-based classification, not truth verification. The model
-        looks at linguistic style — it cannot fact-check claims. Always
-        cross-reference against primary sources.
-      </p>
-      <p className="mt-2 font-mono text-[10px] text-ink-dim">
-        Model:{" "}
-        <a
-          href={`https://huggingface.co/${result.model}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-accent-soft hover:underline"
-        >
-          {result.model}
-        </a>
-      </p>
-    </div>
+      <div className="rule mt-5 pt-4">
+        <p className="text-xs leading-relaxed text-ink-muted">
+          This is pattern-based classification, not truth verification. The
+          model looks at linguistic style — it cannot fact-check claims. Always
+          cross-reference against primary sources.
+        </p>
+        <p className="mt-2 font-mono text-[10px] text-ink-dim">
+          Model:{" "}
+          <a
+            href={`https://huggingface.co/${result.model}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent hover:underline"
+          >
+            {result.model}
+          </a>
+        </p>
+      </div>
+    </article>
   );
 }

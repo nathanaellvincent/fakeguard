@@ -1,6 +1,6 @@
 export function Footer() {
   return (
-    <footer className="mt-16 border-t border-border/40 py-8">
+    <footer className="mt-16 border-t border-border/60 py-8">
       <div className="mx-auto flex max-w-5xl flex-col items-center gap-1 px-4 text-center text-xs text-ink-dim sm:px-6">
         <p>
           Built by{" "}
@@ -8,7 +8,7 @@ export function Footer() {
             href="https://vincentnathanael.vercel.app"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-accent-soft hover:underline"
+            className="text-accent hover:underline"
           >
             Vincent Nathanael
           </a>{" "}
